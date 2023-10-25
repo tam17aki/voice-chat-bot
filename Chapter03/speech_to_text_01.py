@@ -1,9 +1,9 @@
+import openai
 import sounddevice as sd
 from scipy.io.wavfile import write
-import openai
 
 # OpenAIのAPIキーを設定
-openai.api_key = 'your-api-key'
+openai.api_key = "your-api-key"
 
 # 録音のパラメータ
 fs = 44100  # サンプルレート
@@ -15,11 +15,11 @@ recording = sd.rec(int(seconds * fs), samplerate=fs, channels=1)
 sd.wait()  # 録音が終了するまで待つ
 
 # 録音の保存
-write('output.wav', fs, recording)
+write("output.wav", fs, recording)
 print("録音が終了しました。")
 
 # ファイルをバイナリモードで開く
-with open('output.wav', "rb") as audio_file:
+with open("output.wav", "rb") as audio_file:
     # Whisper APIを使用してオーディオファイルをテキストに変換
     transcript = openai.Audio.transcribe("whisper-1", audio_file)
 
