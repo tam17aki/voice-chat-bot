@@ -4,6 +4,7 @@ from playsound import playsound
 # VOICEVOX EngineのURL
 VOICEVOX_URL = "http://localhost:50021"
 
+
 def text_to_speech(text):
     # 音声合成のためのクエリを生成
     response = requests.post(
@@ -41,6 +42,7 @@ def text_to_speech(text):
 
         # 音声データを再生
         playsound("output.wav")
+
 
 if __name__ == "__main__":
     # 音声に変換したいテキスト
