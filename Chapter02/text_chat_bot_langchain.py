@@ -1,11 +1,11 @@
-from langchain.chat_models import ChatOpenAI
 from langchain.chains import ConversationChain
+from langchain.chat_models import ChatOpenAI
 from langchain.memory import ConversationBufferMemory
 from langchain.prompts import (
     ChatPromptTemplate,
+    HumanMessagePromptTemplate,
     MessagesPlaceholder,
     SystemMessagePromptTemplate,
-    HumanMessagePromptTemplate
 )
 
 # プロンプトテンプレートの準備
@@ -18,20 +18,26 @@ template = """あなたは猫のキャラクターとして振る舞うチャッ
 - 好物はかつおぶしです"""
 
 # プロンプトの準備
-prompt = ChatPromptTemplate.from_messages([
-    SystemMessagePromptTemplate.from_template(template),
-    MessagesPlaceholder(variable_name="history"),
-    HumanMessagePromptTemplate.from_template("{input}")
-])
+prompt = ChatPromptTemplate.from_messages(
+    [
+        SystemMessagePromptTemplate.from_template(template),
+        MessagesPlaceholder(variable_name="history"),
+        HumanMessagePromptTemplate.from_template("{input}"),
+    ]
+)
 
 # LangChainのLarge Language Model (LLM)を設定
-llm = ChatOpenAI(temperature=0, model_name="gpt-3.5-turbo")
+llm = ChatOpenAI(
+    temperature=0,
+    model_name="gpt-3.5-turbo",
+    openai_api_key="your-api-key",
+)
 
 # メモリの設定
 memory = ConversationBufferMemory(return_messages=True)
 
 # チャットボットの作成
-conversation = ConversationChain(llm=llm, verbose=True, prompt=prompt, memory=memory)
+conversation = ConversationChain(llm=llm, verbose=False, prompt=prompt, memory=memory)
 
 # ユーザーからのメッセージを受け取り、それに対する応答を生成
 while True:
