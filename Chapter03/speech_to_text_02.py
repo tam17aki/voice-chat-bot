@@ -1,12 +1,13 @@
-import sounddevice as sd
-from scipy.io.wavfile import write
-import openai
-import numpy as np
 import threading
 import time
 
+import numpy as np
+import openai
+import sounddevice as sd
+from scipy.io.wavfile import write
+
 # OpenAIのAPIキーを設定
-openai.api_key = 'your-api-key'
+openai.api_key = "your-api-key"
 
 # 録音のパラメータ
 fs = 44100  # サンプルレート
@@ -14,6 +15,7 @@ recording = np.array([])  # 録音データを保存する配列
 
 # 録音の開始と終了を制御するフラグ
 is_recording = False
+
 
 def record():
     """録音を行う関数"""
@@ -28,6 +30,7 @@ def record():
         else:
             # CPU負荷を下げるために1ミリ秒待機
             time.sleep(0.001)
+
 
 # 録音スレッドの開始
 recording_thread = threading.Thread(target=record)
@@ -46,10 +49,10 @@ while True:
         print("録音が終了しました。")
         if recording.size > 0:
             # 録音データが存在する場合、データをファイルに保存
-            write('output.wav', fs, recording)
+            write("output.wav", fs, recording)
 
             # ファイルをバイナリモードで開く
-            with open('output.wav', "rb") as audio_file:
+            with open("output.wav", "rb") as audio_file:
                 # Whisper APIを使用してオーディオファイルをテキストに変換
                 transcript = openai.Audio.transcribe("whisper-1", audio_file)
 
