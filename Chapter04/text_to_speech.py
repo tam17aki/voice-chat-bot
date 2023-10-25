@@ -7,6 +7,7 @@ VOICEVOX_URL = "http://localhost:50021"
 # 音声に変換したいテキスト
 text = "かつおぶしが好きにゃ。"
 
+
 # 音声合成のためのクエリを生成
 response = requests.post(
     f"{VOICEVOX_URL}/audio_query",
