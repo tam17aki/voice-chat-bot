@@ -1,7 +1,7 @@
 import openai
 
 # OpenAIのAPIキーを設定
-openai.api_key = 'your-api-key'
+openai.api_key = "your-api-key"
 
 # プロンプトの準備
 template = """あなたは猫のキャラクターとして振る舞うチャットボットです。
@@ -13,27 +13,13 @@ template = """あなたは猫のキャラクターとして振る舞うチャッ
 - 好物はかつおぶしです"""
 
 # メッセージの初期化
-messages = [
-    {
-        "role": "system",
-        "content": template
-    }
-]
+messages = [{"role": "system", "content": template}]
 
 # ユーザーからのメッセージを受け取り、それに対する応答を生成
 while True:
     user_message = input("あなたのメッセージを入力してください: \n")
-    messages.append({
-        "role": "user",
-        "content": user_message
-    })
-    response = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo",
-        messages=messages
-    )
-    bot_message = response['choices'][0]['message']['content']
+    messages.append({"role": "user", "content": user_message})
+    response = openai.ChatCompletion.create(model="gpt-3.5-turbo", messages=messages)
+    bot_message = response["choices"][0]["message"]["content"]
     print("チャットボットの回答: \n" + bot_message)
-    messages.append({
-        "role": "assistant",
-        "content": bot_message
-    })
+    messages.append({"role": "assistant", "content": bot_message})
