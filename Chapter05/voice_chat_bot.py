@@ -1,9 +1,9 @@
 import openai
-from text_to_speech import text_to_speech
 from speech_to_text import speech_to_text
+from text_to_speech import text_to_speech
 
 # OpenAIのAPIキーを設定
-openai.api_key = 'your-api-key'
+openai.api_key = "your-api-key"
 
 # テンプレートの準備
 template = """あなたは猫のキャラクターとして振る舞うチャットボットです。
@@ -15,12 +15,7 @@ template = """あなたは猫のキャラクターとして振る舞うチャッ
 - 好物はかつおぶしです"""
 
 # メッセージの初期化
-messages = [
-    {
-        "role": "system",
-        "content": template
-    }
-]
+messages = [{"role": "system", "content": template}]
 
 # ユーザーからのメッセージを受け取り、それに対する応答を生成
 while True:
@@ -32,21 +27,12 @@ while True:
         continue
 
     print("あなたのメッセージ: \n{}".format(user_message))
-    messages.append({
-        "role": "user",
-        "content": user_message
-    })
-    response = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo",
-        messages=messages
-    )
-    bot_message = response['choices'][0]['message']['content']
+    messages.append({"role": "user", "content": user_message})
+    response = openai.ChatCompletion.create(model="gpt-3.5-turbo", messages=messages)
+    bot_message = response["choices"][0]["message"]["content"]
     print("チャットボットの回答: \n{}".format(bot_message))
 
     # テキストを音声に変換して再生
     text_to_speech(bot_message)
 
-    messages.append({
-        "role": "assistant",
-        "content": bot_message
-    })
+    messages.append({"role": "assistant", "content": bot_message})
